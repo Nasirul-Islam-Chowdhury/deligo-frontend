@@ -12,7 +12,7 @@ export const userLogin = async (data: FieldValues) => {
             'Content-Type': 'application/json',
          },
          body: JSON.stringify(data),
-         // credentials: 'include',
+         credentials: 'include',
          // cache: "no-store",
       }
    );

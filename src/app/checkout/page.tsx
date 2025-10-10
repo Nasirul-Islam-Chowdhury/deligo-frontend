@@ -1,33 +1,33 @@
-"use client"
+"use client";
 
-import type React from "react"
+import type React from "react";
 
-import { Header } from "@/components/menu/Header2"
-import { Button } from "@/components/ui/Button"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Textarea } from "@/components/ui/textarea"
-import { Separator } from "@/components/ui/separator"
-import { useAppSelector, useAppDispatch } from "@/lib/hook"
+import { Header } from "@/components/menu/Header2";
+import { Button } from "@/components/ui/Button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
+import { Separator } from "@/components/ui/separator";
+import { useAppSelector, useAppDispatch } from "@/lib/hook";
 
-import { useRouter } from "next/navigation"
-import { useState } from "react"
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 
-import { Loader2 } from "lucide-react"
-import { toast } from "sonner"
-import { clearCart } from "@/redux/slices/cartSlice"
-import { useCreateOrderMutation } from "@/redux/api/orderApi"
-import { getUserInfo } from "@/services/auth.services"
+import { Loader2 } from "lucide-react";
+import { toast } from "sonner";
+import { clearCart } from "@/redux/slices/cartSlice";
+import { useCreateOrderMutation } from "@/redux/api/orderApi";
+import { getUserInfo } from "@/services/auth.services";
 
 export default function CheckoutPage() {
-  const router = useRouter()
-  const dispatch = useAppDispatch()
-  const cartItems = useAppSelector((state) => state.cart.items)
-  const restaurantId = useAppSelector((state) => state.cart.restaurantId)
-  const restaurantName = useAppSelector((state) => state.cart.restaurantName)
+  const router = useRouter();
+  const dispatch = useAppDispatch();
+  const cartItems = useAppSelector((state) => state.cart.items);
+  const restaurantId = useAppSelector((state) => state.cart.restaurantId);
+  const restaurantName = useAppSelector((state) => state.cart.restaurantName);
 
-  const [createOrder, { isLoading }] = useCreateOrderMutation()
+  const [createOrder, { isLoading }] = useCreateOrderMutation();
 
   const [formData, setFormData] = useState({
     customerName: "",
@@ -37,42 +37,47 @@ export default function CheckoutPage() {
     city: "",
     zipCode: "",
     notes: "",
-  })
+  });
 
-  const subtotal = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0)
-  const deliveryFee = 5.99
-  const tax = subtotal * 0.1
-  const total = subtotal + deliveryFee + tax
+  const subtotal = cartItems.reduce(
+    (sum, item) => sum + item.price * item.quantity,
+    0
+  );
+  const deliveryFee = 5.99;
+  const tax = subtotal * 0.1;
+  const total = subtotal + deliveryFee + tax;
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleInputChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value,
-    })
-  }
+    });
+  };
 
   const user = getUserInfo();
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
+    e.preventDefault();
 
-    if(user.role ==="admin"){
-      return toast.error("You can't place order as admin")
+    if (user.role === "admin") {
+      return toast.error("You can't place order as admin");
     }
 
     if (!restaurantId) {
-      toast.error("No restaurant selected")
-      return
+      toast.error("No restaurant selected");
+      return;
     }
 
     if (cartItems.length === 0) {
-      toast.error("Your cart is empty")
-      return
+      toast.error("Your cart is empty");
+      return;
     }
 
-    const estimatedDeliveryTime = new Date()
-    estimatedDeliveryTime.setMinutes(estimatedDeliveryTime.getMinutes() + 35)
-    const estimatedDelivery = estimatedDeliveryTime.toISOString()
+    const estimatedDeliveryTime = new Date();
+    estimatedDeliveryTime.setMinutes(estimatedDeliveryTime.getMinutes() + 35);
+    const estimatedDelivery = estimatedDeliveryTime.toISOString();
 
     try {
       const response = await createOrder({
@@ -85,34 +90,36 @@ export default function CheckoutPage() {
         })),
         totalAmount: total,
         estimatedDelivery: estimatedDelivery,
-      }).unwrap()
+      }).unwrap();
 
+      if (response.success) {
+        dispatch(clearCart());
+        toast.success("Your order has been placed successfully!");
+      } else {
+        toast.error(response.message);
+      }
 
-      dispatch(clearCart())
-
-      toast.success("Your order has been placed successfully!")
-      router.push("/dashboard/customer")
-
+      router.push("/dashboard/customer");
     } catch (error: any) {
-      console.error("Order creation error:", error)
-      
-      const errorMessage = 
-        error?.data?.message || 
-        error?.message || 
-        "There was an error placing your order. Please try again."
-      
-      toast.error(errorMessage)
+      console.error("Order creation error:", error);
+
+      const errorMessage =
+        error?.data?.message ||
+        error?.message ||
+        "There was an error placing your order. Please try again.";
+
+      toast.error(errorMessage);
     }
-  }
-
-
+  };
 
   return (
     <div className="min-h-screen bg-background">
       <Header />
       <main className="container mx-auto px-4 py-8">
         <h1 className="text-3xl font-bold mb-2">Checkout</h1>
-        <p className="text-muted-foreground mb-8">Complete your order from {restaurantName}</p>
+        <p className="text-muted-foreground mb-8">
+          Complete your order from {restaurantName}
+        </p>
 
         <form onSubmit={handleSubmit}>
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
@@ -223,11 +230,16 @@ export default function CheckoutPage() {
                 <CardContent className="space-y-4">
                   <div className="space-y-3">
                     {cartItems.map((item) => (
-                      <div key={item._id} className="flex justify-between text-sm">
+                      <div
+                        key={item._id}
+                        className="flex justify-between text-sm"
+                      >
                         <span className="text-muted-foreground">
                           {item.quantity}x {item.name}
                         </span>
-                        <span className="font-medium">${(item.price * item.quantity).toFixed(2)}</span>
+                        <span className="font-medium">
+                          ${(item.price * item.quantity).toFixed(2)}
+                        </span>
                       </div>
                     ))}
                   </div>
@@ -240,7 +252,9 @@ export default function CheckoutPage() {
                   </div>
                   <div className="flex justify-between text-sm">
                     <span className="text-muted-foreground">Delivery Fee</span>
-                    <span className="font-medium">${deliveryFee.toFixed(2)}</span>
+                    <span className="font-medium">
+                      ${deliveryFee.toFixed(2)}
+                    </span>
                   </div>
                   <div className="flex justify-between text-sm">
                     <span className="text-muted-foreground">Tax</span>
@@ -254,7 +268,12 @@ export default function CheckoutPage() {
                     <span className="text-primary">${total.toFixed(2)}</span>
                   </div>
 
-                  <Button type="submit" size="lg" className="w-full" disabled={isLoading}>
+                  <Button
+                    type="submit"
+                    size="lg"
+                    className="w-full"
+                    disabled={isLoading}
+                  >
                     {isLoading ? (
                       <>
                         <Loader2 className="mr-2 h-4 w-4 animate-spin" />
@@ -271,5 +290,5 @@ export default function CheckoutPage() {
         </form>
       </main>
     </div>
-  )
+  );
 }

@@ -88,7 +88,7 @@ The frontend uses the backend REST API at `/api/v1/`. Main endpoints:
 ## Demo Link
 
 > If available, visit the live app:  
-> **[https://your-deligo-frontend-demo-url.com](https://your-deligo-frontend-demo-url.com)**
+> **[https://deligo-frontend.vercel.app](https://deligo-frontend.vercel.app/)**
 
 ---
 

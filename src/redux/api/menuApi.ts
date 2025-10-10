@@ -10,7 +10,7 @@ export const menuAPi = baseApi.injectEndpoints({
           method: "GET",
         };
       },
-      providesTags: [tagTypes.customer],
+      providesTags: [tagTypes.menu],
     }),
 
     createMenu: build.mutation({
@@ -20,10 +20,9 @@ export const menuAPi = baseApi.injectEndpoints({
           method: "POST",
           data,
           contentType: "multipart/form-data",
-
         };
       },
-      invalidatesTags: [tagTypes.customer],
+      invalidatesTags: [tagTypes.menu],
     }),
 
     updateMenu: build.mutation({
@@ -34,14 +33,17 @@ export const menuAPi = baseApi.injectEndpoints({
           body: data,
           contentType: "multipart/form-data",
           headers: {
-            'Content-Type': 'multipart/form-data',
+            "Content-Type": "multipart/form-data",
           },
         };
       },
-      invalidatesTags: [tagTypes.customer],
+      invalidatesTags: [tagTypes.menu],
     }),
-    
   }),
 });
 
-export const { useGetAllMenusQuery, useUpdateMenuMutation, useCreateMenuMutation } = menuAPi;
+export const {
+  useGetAllMenusQuery,
+  useUpdateMenuMutation,
+  useCreateMenuMutation,
+} = menuAPi;

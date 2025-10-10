@@ -30,7 +30,7 @@ export function CreateRestaurantModal({
   open,
   onOpenChange,
 }: CreateRestaurantModalProps) {
-  const { data: menu } = useGetAllMenusQuery({});
+  const { data: menu, refetch } = useGetAllMenusQuery({});
   const [createRestaurent, { isLoading }] = useCreateRestaurentMutation();
   const [formData, setFormData] = useState({
     name: "",
@@ -370,6 +370,7 @@ export function CreateRestaurantModal({
       </Dialog>
 
       <CreateMenuModal
+      refetchMenu={refetch}
         open={isMenuModalOpen}
         onOpenChange={setIsMenuModalOpen}
       />

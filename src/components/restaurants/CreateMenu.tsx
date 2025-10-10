@@ -22,6 +22,8 @@ import { toast } from "sonner";
 interface CreateMenuModalProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
+  refetchMenu:any;
+
 }
 
 interface MenuFormData {
@@ -30,7 +32,7 @@ interface MenuFormData {
   price: number;
 }
 
-export function CreateMenuModal({ open, onOpenChange }: CreateMenuModalProps) {
+export function CreateMenuModal({ open, onOpenChange, refetchMenu }: CreateMenuModalProps) {
   const [createMenu, { isLoading }] = useCreateMenuMutation();
 
   const [imageFile, setImageFile] = useState<File | null>(null);
@@ -80,7 +82,7 @@ export function CreateMenuModal({ open, onOpenChange }: CreateMenuModalProps) {
       }
 
       await createMenu(formData).unwrap();
-
+      refetchMenu()
       toast.success("Menu item created successfully.");
 
       reset();

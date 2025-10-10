@@ -30,7 +30,7 @@ This app interacts with the [Deligo backend](../deligo-backend) for all API oper
 
 1. **Clone the repository and install dependencies:**
     ```bash
-    git clone https://github.com/Nasirul-Islam-Chowdhury/deligo.git
+    git clone https://github.com/Nasirul-Islam-Chowdhury/deligo-frontend.git
     cd deligo-frontend
     npm install
     ```
@@ -38,11 +38,7 @@ This app interacts with the [Deligo backend](../deligo-backend) for all API oper
 2. **Configure environment variables:**
 
    Create a `.env.local` file in the project root.  
-   Example:
-   ```
-   NEXT_PUBLIC_API_BASE_URL=http://localhost:5000/api/v1
-   NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME=your_cloudinary_name
-   ```
+
 
 3. **Run the development server:**
     ```bash
@@ -81,22 +77,17 @@ The frontend uses the backend REST API at `/api/v1/`. Main endpoints:
   - `GET /orders` – [Admin] List all orders
   - `POST /orders` – Create new order
 
-> Authentication required for most endpoints. See [backend API docs](../deligo-backend/Readme.md) for full details.
 
 ---
 
 ## Demo Link
 
 > If available, visit the live app:  
-> **[https://your-deligo-frontend-demo-url.com](https://your-deligo-frontend-demo-url.com)**
+> **[https://deligo-frontend.vercel.app/](https://deligo-frontend.vercel.app/)**
 
 ---
 
-## Screenshots
 
-*(Add screenshots here to illustrate user flows, dashboard, menus, order page, etc.)*
-
----
 
 ## Features Overview
 
@@ -110,11 +101,7 @@ The frontend uses the backend REST API at `/api/v1/`. Main endpoints:
 
 ---
 
-## Contribution
 
-Feel free to open issues or PRs for improvements. For more info, see [`CONTRIBUTING.md`](./CONTRIBUTING.md) if present.
-
----
 
 ## License
 

@@ -16,6 +16,7 @@ import { useState } from "react";
 import { useBookRideMutation } from "@/redux/api/rideApi";
 import { getUserInfo } from "@/services/auth.services";
 import { Header } from "@/components/menu/Header2";
+import HomeHeader from "@/components/home/header";
 
 interface RideFormValues {
   customerId?: string;
@@ -74,7 +75,7 @@ export default function BookRide() {
 
   return (
     <>
-      <Header />
+      <HomeHeader />
       <div className="flex justify-center mt-10">
         <Card className="w-full max-w-md shadow-lg">
           <CardHeader>
@@ -99,14 +100,23 @@ export default function BookRide() {
               </div>
 
               <div>
+                <label className="text-sm font-medium">Estimated Fare</label>
+                <Input
+                  placeholder="Fare"
+                
+                />
+              </div>
+
+              <div className="w-full">
                 <label className="text-sm font-medium">Vehicle Type</label>
                 <Select
+                
                   onValueChange={(val) => setValue("vehicleType", val as any)}
                 >
-                  <SelectTrigger>
+                  <SelectTrigger className="w-full">
                     <SelectValue placeholder="Select vehicle" />
                   </SelectTrigger>
-                  <SelectContent>
+                  <SelectContent className="w-full">
                     <SelectItem value="Car">Car</SelectItem>
                     <SelectItem value="Bike">Bike</SelectItem>
                     <SelectItem value="Auto">Auto</SelectItem>

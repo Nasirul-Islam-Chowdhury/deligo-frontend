@@ -35,12 +35,12 @@ export default function HomeHeader() {
   return (
     <nav className="border-b border-border/50 sticky top-0 bg-background/95 backdrop-blur-sm z-50">
       <div className="container mx-auto px-4 py-4 flex items-center justify-between">
-        <div className="flex items-center gap-2">
+        <Link href={"/"} className="flex items-center gap-2">
           <div className="w-10 h-10 bg-primary rounded-lg flex items-center justify-center font-bold text-xl text-primary-foreground">
             D
           </div>
           <span className="text-2xl font-bold">DeliGo</span>
-        </div>
+        </Link>
 
         {/* Desktop Navigation */}
         <div className="hidden md:flex items-center gap-8">

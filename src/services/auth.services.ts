@@ -44,5 +44,6 @@ export const getNewAccessToken = async () => {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       withCredentials: true,
+      
    });
 };

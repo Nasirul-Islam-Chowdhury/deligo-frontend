@@ -19,12 +19,12 @@ export function RestaurantCard({ restaurant }: RestaurantCardProps) {
 
   return (
     <Link href={`/restaurents/${restaurant._id}`}>
-      <Card className="overflow-hidden hover:shadow-lg transition-shadow cursor-pointer group">
-        <div className="relative h-48 overflow-hidden">
+      <Card className="overflow-hidden p-0 hover:shadow-lg transition-shadow cursor-pointer group">
+        <div className="relative h-52 ">
           <img
             src={imageUrl || "/placeholder.svg"}
             alt={restaurant.name}
-            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+            className="w-full  h-full object-cover group-hover:scale-105 transition-transform duration-300"
           />
           <Badge className="absolute top-3 right-3 bg-background/90 text-foreground border">
             {restaurant.cuisineType}

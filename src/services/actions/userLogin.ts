@@ -12,19 +12,15 @@ export const userLogin = async (data: FieldValues) => {
             'Content-Type': 'application/json',
          },
          body: JSON.stringify(data),
-         credentials: 'include',
+         // credentials: 'include',
          // cache: "no-store",
       }
    );
    const userInfo = await res.json();
 
-   const passwordChangeRequired = userInfo?.data?.needPasswordChange;
 
    if (userInfo?.data?.accessToken) {
-      setAccessToken(userInfo.data.accessToken, {
-         redirect: '/dashboard',
-         passwordChangeRequired,
-      });
+      setAccessToken(userInfo.data.accessToken);
    }
 
    return userInfo;

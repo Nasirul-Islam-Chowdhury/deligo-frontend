@@ -3,6 +3,7 @@ import React from "react";
 import { useForm, FieldValues } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
+import HomeHeader from "@/components/home/header";
 
 const RegisterPage = () => {
   const { register, handleSubmit, formState: { errors }, reset } = useForm();
@@ -12,11 +13,12 @@ const RegisterPage = () => {
   const router = useRouter();
 
   const onSubmit = async (values: FieldValues) => {
+    values.role = "customer"
     setLoading(true);
     setErrorMsg("");
     try {
       const res = await fetch(
-        `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/auth/register`,
+        `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/users/create-user`,
         {
           method: "POST",
           headers: {
@@ -42,6 +44,8 @@ const RegisterPage = () => {
         setErrorMsg(data?.message || "Registration failed");
       }
     } catch (err: any) {
+
+
       toast.error(err?.message || "An error occurred");
       setErrorMsg(err?.message || "An error occurred");
       console.error(err);
@@ -55,15 +59,19 @@ const RegisterPage = () => {
   };
 
   return (
-    <div
+    <>
+       <HomeHeader></HomeHeader>
+       <div
       style={{
         minHeight: "100vh",
-        background: "black",
+        background: "white",
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
       }}
     >
+
+   
       <form
         onSubmit={handleSubmit(onSubmit)}
         style={{
@@ -87,14 +95,14 @@ const RegisterPage = () => {
           Register for Deligo
         </h2>
         <div style={{ marginBottom: "1.25rem" }}>
-          <label htmlFor="fullName" style={{ fontWeight: 500 }}>
+          <label htmlFor="name" style={{ fontWeight: 500 }}>
             Full Name
           </label>
           <input
-            id="fullName"
+            id="name"
             type="text"
             autoComplete="name"
-            {...register("fullName", { required: "Full name is required" })}
+            {...register("name", { required: "Full name is required" })}
             style={{
               width: "100%",
               padding: "0.6rem",
@@ -136,11 +144,7 @@ const RegisterPage = () => {
               transition: "border 0.2s",
             }}
           />
-          {errors.email && (
-            <span style={{ color: "#ff4d4f", fontSize: "0.95rem" }}>
-              {errors.email.message as string}
-            </span>
-          )}
+
         </div>
         <div style={{ marginBottom: "1.25rem", position: "relative" }}>
           <label htmlFor="password" style={{ fontWeight: 500 }}>
@@ -192,24 +196,9 @@ const RegisterPage = () => {
               {showPassword ? "🙈" : "👁️"}
             </button>
           </div>
-          {errors.password && (
-            <span style={{ color: "#ff4d4f", fontSize: "0.95rem" }}>
-              {errors.password.message as string}
-            </span>
-          )}
+    
         </div>
-        {errorMsg && (
-          <div
-            style={{
-              color: "#ff4d4f",
-              marginBottom: "1.2rem",
-              textAlign: "center",
-              fontWeight: 500,
-            }}
-          >
-            {errorMsg}
-          </div>
-        )}
+        
         <button
           type="submit"
           disabled={loading}
@@ -254,6 +243,9 @@ const RegisterPage = () => {
         </div>
       </form>
     </div>
+       </>
+       
+   
   );
 };
 

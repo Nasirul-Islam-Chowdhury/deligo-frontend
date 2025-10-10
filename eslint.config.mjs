@@ -19,6 +19,30 @@ const eslintConfig = [
       "build/**",
       "next-env.d.ts",
     ],
+    rules: {
+      // Allow `any`
+      "@typescript-eslint/no-explicit-any": "off",
+
+      // Ignore unused vars (or only warn if not starting with _)
+      "@typescript-eslint/no-unused-vars": [
+        "warn",
+        {
+          argsIgnorePattern: "^_",
+          varsIgnorePattern: "^_",
+        },
+      ],
+
+      // Allow <img> instead of forcing next/image
+      "@next/next/no-img-element": "off",
+
+      // Ignore unescaped entities like "
+      "react/no-unescaped-entities": "off",
+      "@typescript-eslint/no-unused-vars": "off",
+      "@typescript-eslint/ban-ts-comment": "off",
+
+      // Allow @ts-ignore
+      "@typescript-eslint/ban-ts-comment": "off",
+    },
   },
 ];
 

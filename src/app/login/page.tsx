@@ -1,10 +1,11 @@
 "use client";
 import React from "react";
 import { FieldValues, useForm } from "react-hook-form";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { toast } from 'sonner';
 import { userLogin } from '@/services/actions/userLogin';
-import { storeUserInfo } from "@/services/auth.services";
+import {  storeUserInfo } from "@/services/auth.services";
+import HomeHeader from "@/components/home/header";
 
 const LoginPage = () => {
   const { register, handleSubmit, formState: { errors }, reset } = useForm();
@@ -12,6 +13,9 @@ const LoginPage = () => {
   const [errorMsg, setErrorMsg] = React.useState("");
   const [showPassword, setShowPassword] = React.useState(false);
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const redirect = searchParams.get("redirect");
+
 
   const handleRegisterRedirect = () => {
     router.push("/register");
@@ -27,7 +31,7 @@ const LoginPage = () => {
         toast.success(res?.message || "Login successful!");
         storeUserInfo({ accessToken: res?.data?.accessToken });
         reset();
-        router.push("/dashboard");
+        router.push(redirect || "/dashboard");
       } else {
         toast.error(res?.message || "Login failed");
         setErrorMsg(res?.message || "Login failed");
@@ -42,10 +46,16 @@ const LoginPage = () => {
   };
 
   return (
+
+    <div className="min-h-screen bg-background text-foreground">
+     <HomeHeader/>
+
+
+
     <div
       style={{
         minHeight: "100vh",
-        background: "black",
+        background: "white",
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
@@ -189,6 +199,14 @@ const LoginPage = () => {
         </div>
       </form>
     </div>
+
+
+
+  </div>
+
+
+
+ 
   );
 };
 

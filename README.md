@@ -12,6 +12,22 @@ The frontend of **Deligo** is designed to provide a seamless experience for both
 
 This app interacts with the [Deligo backend](../deligo-backend) for all API operations like authentication, menu management, order processing, and image uploads.
 
+
+
+
+
+
+## 🚨 **Demo Admin Account** 🚨
+
+> 💡 **Try out Deligo as an admin!**
+
+| **Admin Email**               | ** Password** |
+|-------------------------------|:-----------------:|
+| `nasirchy252@gmail.com`       |   `12121212`      |
+
+> ⚡ **Use these credentials on the live site for admin access!**
+
+
 ---
 
 ## Technologies Used
